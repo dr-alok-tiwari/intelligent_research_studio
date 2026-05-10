@@ -1,5 +1,5 @@
 # Intelligent Research: AI Applications & Techniques
-## Complete Classroom Teaching System — GIM Panaji
+## Complete Classroom Teaching System — For Researchers
 
 ### Setup
 
