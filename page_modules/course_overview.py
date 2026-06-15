@@ -1,5 +1,6 @@
 import streamlit as st
 
+
 def render():
     st.markdown("""
 <div class="page-banner">
@@ -39,22 +40,22 @@ science experience. Tools introduced are no-code or low-code wherever possible.
     with tab2:
         st.markdown("### Session Sequence")
         sessions = [
-            ("S01","AI & the Research Landscape","CLO 1","Situating AI in scholarly practice"),
-            ("S02","Research Problem Identification & Gap Analysis","CLO 2","From curiosity to researchable problem"),
-            ("S03","AI-Assisted Literature Search","CLO 3","Beyond Google Scholar"),
-            ("S04","Systematic Review & PRISMA","CLO 3","Rigour in evidence synthesis"),
-            ("S05","Research Questions & Hypotheses","CLO 2, 5","Precision in inquiry framing"),
-            ("S06","Theoretical Frameworks","CLO 4","Grounding research in theory"),
-            ("S07","Quantitative Methods with AI","CLO 5","Survey, scale, and statistical design"),
-            ("S08","Qualitative Methods with AI","CLO 5","Interview, coding, and thematic analysis"),
-            ("S09","Mixed Methods & AI Integration","CLO 5","Integration logics and design"),
-            ("S10","AI for Data Collection","CLO 6","Instruments, ethics, and bias"),
-            ("S11","AI-Assisted Analysis & Interpretation","CLO 6","From output to argument"),
-            ("S12","Academic Writing with AI","CLO 7","Voice, structure, and integrity"),
-            ("S13","Citation, Plagiarism & Research Ethics","CLO 7, 8","Integrity in the AI era"),
-            ("S14","Peer Review & Revision","CLO 7","Scholarly dialogue and revision"),
-            ("S15","Dissemination & Publication Strategy","CLO 7, 8","Getting research read"),
-            ("S16","Capstone & the Future of AI Research","CLO 1–8","Synthesis and outlook"),
+            ("S01", "AI & the Research Landscape", "CLO 1", "Situating AI in scholarly practice"),
+            ("S02", "Research Problem Identification & Gap Analysis", "CLO 2", "From curiosity to researchable problem"),
+            ("S03", "AI-Assisted Literature Search", "CLO 3", "Beyond Google Scholar"),
+            ("S04", "Systematic Review & PRISMA", "CLO 3", "Rigour in evidence synthesis"),
+            ("S05", "Research Questions & Hypotheses", "CLO 2, 5", "Precision in inquiry framing"),
+            ("S06", "Theoretical Frameworks", "CLO 4", "Grounding research in theory"),
+            ("S07", "Quantitative Methods with AI", "CLO 5", "Survey, scale, and statistical design"),
+            ("S08", "Qualitative Methods with AI", "CLO 5", "Interview, coding, and thematic analysis"),
+            ("S09", "Mixed Methods & AI Integration", "CLO 5", "Integration logics and design"),
+            ("S10", "AI for Data Collection", "CLO 6", "Instruments, ethics, and bias"),
+            ("S11", "AI-Assisted Analysis & Interpretation", "CLO 6", "From output to argument"),
+            ("S12", "Academic Writing with AI", "CLO 7", "Voice, structure, and integrity"),
+            ("S13", "Citation, Plagiarism & Research Ethics", "CLO 7, 8", "Integrity in the AI era"),
+            ("S14", "Peer Review & Revision", "CLO 7", "Scholarly dialogue and revision"),
+            ("S15", "Dissemination & Publication Strategy", "CLO 7, 8", "Getting research read"),
+            ("S16", "Capstone & the Future of AI Research", "CLO 1–8", "Synthesis and outlook"),
         ]
         for code, title, clo, theme in sessions:
             with st.expander(f"**{code}**  ·  {title}"):
@@ -64,7 +65,8 @@ science experience. Tools introduced are no-code or low-code wherever possible.
                 with col2:
                     st.markdown(f"**Theme:** {theme}")
                 if st.button(f"Open {code} →", key=f"co_open_{code.lower()}"):
-                    st.session_state.current_page = code.lower(); st.rerun()
+                    st.session_state.current_page = code.lower()
+                    st.rerun()
 
     with tab3:
         st.markdown("### Assessment Alignment")
@@ -93,25 +95,24 @@ science experience. Tools introduced are no-code or low-code wherever possible.
     with tab4:
         st.markdown("### AI Tools Integrated in This Course")
         tools = [
-            ("Consensus.app",       "Evidence-based literature discovery — asks research questions and returns synthesised answers"),
-            ("Elicit.org",          "Research question decomposition and structured literature mapping"),
-            ("Connected Papers",    "Citation network visualisation — shows intellectual lineage of a field"),
-            ("ResearchRabbit",      "Literature mapping and new paper alerts in your research area"),
-            ("Semantic Scholar",    "Open-access semantic search with 200M+ papers"),
-            ("Scite.ai",            "Citation context — shows whether papers support, contrast, or mention a claim"),
-            ("Zotero",              "Reference management — integrates with AI plugins for annotation"),
-            ("ChatGPT / Claude",    "Drafting, paraphrasing, structuring — with strong critical caution required"),
-            ("Atlas.ti (AI mode)",  "AI-assisted qualitative coding — human validation mandatory"),
-            ("PROCESS macro (Hayes)","Mediation and moderation analysis — standard tool in management research"),
-            ("VOSviewer",           "Bibliometric network visualisation for systematic reviews"),
-            ("Tableau Public",      "Data visualisation for mixed methods presentations"),
+            ("Consensus.app", "Evidence-based literature discovery — asks research questions and returns synthesised answers"),
+            ("Elicit.org", "Research question decomposition and structured literature mapping"),
+            ("Connected Papers", "Citation network visualisation — shows intellectual lineage of a field"),
+            ("ResearchRabbit", "Literature mapping and new paper alerts in your research area"),
+            ("Semantic Scholar", "Open-access semantic search with 200M+ papers"),
+            ("Scite.ai", "Citation context — shows whether papers support, contrast, or mention a claim"),
+            ("Zotero", "Reference management — integrates with AI plugins for annotation"),
+            ("ChatGPT / Claude", "Drafting, paraphrasing, structuring — with strong critical caution required"),
+            ("Atlas.ti (AI mode)", "AI-assisted qualitative coding — human validation mandatory"),
+            ("PROCESS macro (Hayes)", "Mediation and moderation analysis — standard tool in management research"),
+            ("VOSviewer", "Bibliometric network visualisation for systematic reviews"),
+            ("Tableau Public", "Data visualisation for mixed methods presentations"),
         ]
         cols = st.columns(2)
         for i, (tool, use) in enumerate(tools):
             with cols[i % 2]:
                 st.markdown(f"""
-<div style="background:var(--slate);border:1px solid var(--border);border-radius:10px;
-padding:.7rem .9rem;margin-bottom:.55rem">
-  <div style="font-weight:700;font-size:.85rem;color:var(--navy);margin-bottom:.25rem">🔧 {tool}</div>
-  <div style="font-size:.78rem;color:var(--muted);line-height:1.5">{use}</div>
+<div class="tool-card">
+  <div class="tool-title">🔧 {tool}</div>
+  <div class="tool-body">{use}</div>
 </div>""", unsafe_allow_html=True)
