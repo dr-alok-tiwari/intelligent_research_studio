@@ -231,9 +231,7 @@ academic integrity reminders, troubleshooting, and copyright details.</p></div>"
     for i, (code, desc, icon) in enumerate(clos):
         with cols2[i % 2]:
             st.markdown(f"""
-<div style="display:flex;gap:.7rem;align-items:flex-start;background:#ffffff;
-border:1px solid var(--border);border-radius:14px;padding:.8rem .95rem;margin-bottom:.65rem;box-shadow:var(--shadow)">
-  <div style="background:linear-gradient(135deg,var(--saffron),var(--saffron-deep));color:white;padding:.24rem .55rem;border-radius:9px;
-  font-size:.78rem;font-weight:900;font-family:'DM Mono',monospace;white-space:nowrap;margin-top:.05rem">{icon} {code}</div>
-  <div style="font-size:.96rem;color:var(--ink);line-height:1.58;font-weight:650">{desc}</div>
+<div class="tool-card">
+  <div class="tool-title"><span class="qbadge qb-int">{icon} {code}</span></div>
+  <div class="tool-body">{desc}</div>
 </div>""", unsafe_allow_html=True)
