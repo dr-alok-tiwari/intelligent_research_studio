@@ -1,14 +1,18 @@
+import os
+import sys
+
 import streamlit as st
-import sys, os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from data.quiz_bank_data import QUIZ_BANK
 
 DIFF_MAP = {
-    "Beginner":         ("qbadge qb-beg", "🟢"),
-    "Intermediate":     ("qbadge qb-int", "🟡"),
-    "Advanced":         ("qbadge qb-adv", "🟠"),
-    "Doctoral Challenge":("qbadge qb-doc","🔴"),
+    "Beginner": ("qbadge qb-beg", "🟢"),
+    "Intermediate": ("qbadge qb-int", "🟡"),
+    "Advanced": ("qbadge qb-adv", "🟠"),
+    "Doctoral Challenge": ("qbadge qb-doc", "🔴"),
 }
+
 
 def render_q(q, key_prefix):
     diff_cls, diff_icon = DIFF_MAP.get(q["difficulty"], ("qbadge", "⚪"))
@@ -28,7 +32,6 @@ def render_q(q, key_prefix):
     rkey = f"{key_prefix}_r_{q['number']}"
     skey = f"{key_prefix}_s_{q['number']}"
     revkey = f"{key_prefix}_rv_{q['number']}"
-    ans_key = f"{key_prefix}_ans_{q['number']}"
     rev_shown = f"{key_prefix}_shown_{q['number']}"
 
     if rev_shown not in st.session_state:
@@ -71,6 +74,7 @@ def render_q(q, key_prefix):
             st.markdown(f"**Teaching Insight:** {q.get('teaching_insight','')}")
             st.markdown(f"**Follow-up Discussion:** {q.get('follow_up','')}")
 
+
 def render():
     st.markdown("""
 <div class="page-banner">
@@ -86,7 +90,6 @@ def render():
   </div>
 </div>""", unsafe_allow_html=True)
 
-    # Filters
     col1, col2, col3 = st.columns(3)
     with col1:
         sessions = ["All"] + sorted(set(q["session"] for q in QUIZ_BANK))
@@ -99,21 +102,22 @@ def render():
         sel_c = st.selectbox("Filter by CLO", clos, key="qb_clo")
 
     filtered = QUIZ_BANK
-    if sel_s != "All": filtered = [q for q in filtered if q["session"] == sel_s]
-    if sel_d != "All": filtered = [q for q in filtered if q["difficulty"] == sel_d]
-    if sel_c != "All": filtered = [q for q in filtered if q["clo"] == sel_c]
+    if sel_s != "All":
+        filtered = [q for q in filtered if q["session"] == sel_s]
+    if sel_d != "All":
+        filtered = [q for q in filtered if q["difficulty"] == sel_d]
+    if sel_c != "All":
+        filtered = [q for q in filtered if q["clo"] == sel_c]
 
-    # Summary metrics
+    difficulty_pills = "".join(
+        f'<div class="metric-pill soft">{d}: {sum(1 for q in filtered if q["difficulty"] == d)}</div>'
+        for d in ["Beginner", "Intermediate", "Advanced", "Doctoral Challenge"]
+        if any(q["difficulty"] == d for q in filtered)
+    )
     st.markdown(f"""
-<div style="display:flex;gap:.6rem;align-items:center;margin:.8rem 0 1.2rem;flex-wrap:wrap">
-  <div style="background:var(--slate);border:1px solid var(--border);border-radius:8px;
-  padding:.4rem .9rem;font-size:.8rem;color:var(--navy);font-weight:600">
-    Showing {len(filtered)} question{'s' if len(filtered)!=1 else ''}
-  </div>
-  {''.join(f"""<div style="background:var(--gold-pale);border:1px solid rgba(200,169,81,.3);
-  border-radius:8px;padding:.4rem .9rem;font-size:.75rem;color:#8a5a00">
-  {d}: {sum(1 for q in filtered if q['difficulty']==d)}
-  </div>""" for d in ["Beginner","Intermediate","Advanced","Doctoral Challenge"] if any(q['difficulty']==d for q in filtered))}
+<div class="metric-strip">
+  <div class="metric-pill">Showing {len(filtered)} question{'s' if len(filtered) != 1 else ''}</div>
+  {difficulty_pills}
 </div>""", unsafe_allow_html=True)
 
     if not filtered:
