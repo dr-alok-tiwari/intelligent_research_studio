@@ -22,6 +22,11 @@ SESSION_DATA = [
 ]
 
 
+def go_to(page_id: str) -> None:
+    st.session_state.current_page = page_id
+    st.rerun()
+
+
 def _pdf_escape(text: str) -> str:
     replacements = {"—": "-", "–": "-", "•": "-", "→": "->", "©": "(c)", "’": "'", "“": '"', "”": '"'}
     for src, dst in replacements.items():
@@ -138,7 +143,7 @@ def render():
 <div class="page-banner">
   <div class="banner-tag">GIM · FPM · 2025–26</div>
   <div class="banner-h">Intelligent Research:<br>AI Applications &amp; Techniques</div>
-  <div class="banner-p">A vibrant classroom teaching system for research scholars — with structured sessions,
+  <div class="banner-p">A light saffron classroom teaching system for research scholars — with structured sessions,
   reveal-based activities, cases, prompts, quizzes, and a downloadable handbook for first-time users.</div>
   <div class="banner-pills">
     <span class="pill pill-gold">📽️ Projector-Ready</span>
@@ -166,6 +171,7 @@ def render():
             file_name="Intelligent_Research_Studio_Handbook_Dr_Alok_Tiwari.pdf",
             mime="application/pdf",
             use_container_width=True,
+            key="download_handbook_home",
         )
     with info_col:
         st.markdown("""
@@ -186,14 +192,14 @@ academic integrity reminders, troubleshooting, and copyright details.</p></div>"
     st.markdown("### ⚡ Quick Access")
     c1, c2, c3 = st.columns(3)
     with c1:
-        if st.button("📚 Open Quiz Bank", use_container_width=True):
-            st.session_state.current_page = "quiz_bank"; st.rerun()
+        if st.button("📚 Open Quiz Bank", use_container_width=True, key="qa_quiz_bank"):
+            go_to("quiz_bank")
     with c2:
-        if st.button("📋 Course Overview", use_container_width=True):
-            st.session_state.current_page = "course_overview"; st.rerun()
+        if st.button("📋 Open Course Overview", use_container_width=True, key="qa_course_overview"):
+            go_to("course_overview")
     with c3:
-        if st.button("▶ Start with Session 01", use_container_width=True):
-            st.session_state.current_page = "s01"; st.rerun()
+        if st.button("▶ Start Session 01", use_container_width=True, key="qa_session_01"):
+            go_to("s01")
 
     st.markdown('<hr class="divider">', unsafe_allow_html=True)
     st.markdown("### 🗂️ All 16 Sessions")
@@ -206,8 +212,8 @@ academic integrity reminders, troubleshooting, and copyright details.</p></div>"
   <div class="sess-t">{title}</div>
   <div class="sess-c">{theme}</div>
 </div>""", unsafe_allow_html=True)
-            if st.button(f"Open {icon}", key=f"hm_s_{sid}", use_container_width=True):
-                st.session_state.current_page = sid; st.rerun()
+            if st.button(f"Open S{i+1:02d} →", key=f"hm_open_{sid}", use_container_width=True):
+                go_to(sid)
 
     st.markdown('<hr class="divider">', unsafe_allow_html=True)
     st.markdown("### 🎯 Course Learning Outcomes")
@@ -227,7 +233,7 @@ academic integrity reminders, troubleshooting, and copyright details.</p></div>"
             st.markdown(f"""
 <div style="display:flex;gap:.7rem;align-items:flex-start;background:#ffffff;
 border:1px solid var(--border);border-radius:14px;padding:.8rem .95rem;margin-bottom:.65rem;box-shadow:var(--shadow)">
-  <div style="background:linear-gradient(135deg,var(--saffron),var(--rose));color:white;padding:.24rem .55rem;border-radius:9px;
+  <div style="background:linear-gradient(135deg,var(--saffron),var(--saffron-deep));color:white;padding:.24rem .55rem;border-radius:9px;
   font-size:.78rem;font-weight:900;font-family:'DM Mono',monospace;white-space:nowrap;margin-top:.05rem">{icon} {code}</div>
-  <div style="font-size:.96rem;color:var(--text);line-height:1.58;font-weight:600">{desc}</div>
+  <div style="font-size:.96rem;color:var(--ink);line-height:1.58;font-weight:650">{desc}</div>
 </div>""", unsafe_allow_html=True)
